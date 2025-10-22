@@ -8,6 +8,8 @@
 #include "heap.h"
 using namespace std;
 
+// USE ENCODER TO TEST DIFFERENT LENGTHS OF WORDS
+
 // Global arrays for node information
 const int MAX_NODES = 64;
 int weightArr[MAX_NODES];
@@ -91,6 +93,8 @@ int createLeafNodes(int freq[]) {
 int buildEncodingTree(int nextFree) {
     // TODO:
     // 1. Create a MinHeap object.
+    MinHeap heap;
+    //heap.push(nextFree, weightArr);
     // 2. Push all leaf node indices into the heap.
     // 3. While the heap size is greater than 1:
     //    - Pop two smallest nodes
