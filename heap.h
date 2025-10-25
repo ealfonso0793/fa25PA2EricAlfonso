@@ -39,7 +39,7 @@ struct MinHeap {
             return;
         }
         // loops while node as pos is not at root
-        while (weightArr[pos] > 0) {
+        while (pos > 0) {
             //check if the node is a left or right child
             if (pos % 2 != 0) {
                 if (weightArr[pos] > weightArr[(pos -1) / 2]) {
