@@ -14,13 +14,14 @@ struct MinHeap {
 
     MinHeap() { size = 0; }
 
+    int parentLeft(int i) { return (i - 1) / 2; }
+    int parentRight(int i) { return (i - 2) / 2; }
+
     void push(int idx, int weightArr[]) {
         // TODO: insert index at end of heap, restore order using upheap()
         data[size] = idx;
-        idx++;
-
+        size++;
         upheap(idx, weightArr);
-
     }
 
     int pop(int weightArr[]) {
@@ -35,6 +36,7 @@ struct MinHeap {
 
     void upheap(int pos, int weightArr[]) {
         // TODO: swap child upward while smaller than parent
+
         if (size < 1) {
             return;
         }
@@ -42,19 +44,22 @@ struct MinHeap {
         while (pos > 0) {
             //check if the node is a left or right child
             if (pos % 2 != 0) {
-                if (weightArr[pos] > weightArr[(pos -1) / 2]) {
-                    swap(data[pos], data[(pos -1) / 2]);
-                    pos = (pos - 1) / 2;
+                if (weightArr[pos] > weightArr[parentLeft(pos)]) {
+                    return;
                 }
+                swap(weightArr[pos], weightArr[parentLeft(pos)]);
+                pos = parentLeft(pos);
             }
             else {
-                if (weightArr[pos] > weightArr[(pos - 2) / 2]) {
-                    swap(data[pos], data[(pos - 2) / 2]);
-                    pos = (pos - 2) / 2;
+                if (weightArr[pos] > weightArr[parentRight(pos)]) {
+                    return;
                 }
+                swap(weightArr[pos], weightArr[parentRight(pos)]);
+                pos = parentRight(pos);
             }
-            // sets pos to new position in tree
 
+
+            // sets pos to new position in tree
         }
         //left child node: 2i + 1
         //right child node: 2i + 2
