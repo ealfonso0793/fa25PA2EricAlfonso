@@ -14,6 +14,7 @@ struct MinHeap {
 
     MinHeap() { size = 0; }
 
+    // helper classes for finding parent of a left / right child
     int parentLeft(int i) { return (i - 1) / 2; }
     int parentRight(int i) { return (i - 2) / 2; }
 
@@ -27,7 +28,7 @@ struct MinHeap {
     int pop(int weightArr[]) {
         // TODO: remove and return smallest index
         // Replace root with last element, then call downheap()
-        data[0] = data[size--];
+        data[0] = data[size];
         size--;
 
         downheap(0, weightArr);
@@ -47,14 +48,14 @@ struct MinHeap {
                 if (weightArr[pos] > weightArr[parentLeft(pos)]) {
                     return;
                 }
-                swap(weightArr[pos], weightArr[parentLeft(pos)]);
+                swap(data[pos], data[parentLeft(pos)]);
                 pos = parentLeft(pos);
             }
             else {
                 if (weightArr[pos] > weightArr[parentRight(pos)]) {
                     return;
                 }
-                swap(weightArr[pos], weightArr[parentRight(pos)]);
+                swap(data[pos], data[parentRight(pos)]);
                 pos = parentRight(pos);
             }
 
@@ -63,7 +64,6 @@ struct MinHeap {
         }
         //left child node: 2i + 1
         //right child node: 2i + 2
-
 
     }
 
