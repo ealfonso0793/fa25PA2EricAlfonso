@@ -108,7 +108,20 @@ int buildEncodingTree(int nextFree) {
 
     cout << endl;
     for (int i = 0; i < nextFree; ++i) {
+        cout << weightArr[heap.data[i]] << " ";
+    }
 
+    cout << endl;
+    int jingle = heap.pop(weightArr);
+     cout << jingle << endl;
+    for (int i = 0; i < heap.size; ++i) {
+        cout << weightArr[heap.data[i]] << " ";
+    }
+
+    cout << endl;
+    int jingle2 = heap.pop(weightArr);
+    cout << jingle2 << endl;
+    for (int i = 0; i < heap.size; ++i) {
         cout << weightArr[heap.data[i]] << " ";
     }
 
