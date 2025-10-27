@@ -93,39 +93,17 @@ int createLeafNodes(int freq[]) {
 int buildEncodingTree(int nextFree) {
     // TODO:
     // 1. Create a MinHeap object.
-    MinHeap heap;
+    MinHeap heap = MinHeap();
+
 
     // 2. Push all leaf node indices into the heap.
-    // when printing weightArr[i], initially it reads the weight of letters in alphabetical order
-    for (int i = 0; i < nextFree; ++i) {
-        cout << weightArr[i] << " ";
-    }
-    cout << endl;
-
     for (int i = 0; i < nextFree; ++i) {
         heap.push(i, weightArr);
     }
 
-    cout << endl;
     for (int i = 0; i < nextFree; ++i) {
         cout << weightArr[heap.data[i]] << " ";
     }
-
-    cout << endl;
-    int jingle = heap.pop(weightArr);
-     cout << jingle << endl;
-    for (int i = 0; i < heap.size; ++i) {
-        cout << weightArr[heap.data[i]] << " ";
-    }
-
-    cout << endl;
-    int jingle2 = heap.pop(weightArr);
-    cout << jingle2 << endl;
-    for (int i = 0; i < heap.size; ++i) {
-        cout << weightArr[heap.data[i]] << " ";
-    }
-
-
 
 
     // 3. While the heap size is greater than 1:
@@ -133,6 +111,17 @@ int buildEncodingTree(int nextFree) {
     //    - Create a new parent node with combined weight
     //    - Set left/right pointers
     //    - Push new parent index back into the heap
+
+    // while (heap.size > 1) {
+    //     int node1 = heap.pop(weightArr);
+    //     int node2 = heap.pop(weightArr);
+    //     int parent = weightArr[node1] + weightArr[node2];
+    //     node1 = heap.leftChild(parent);
+    //     node2 = heap.rightChild(parent);
+    //     cout << parent << endl;
+    //     heap.push(parent, weightArr);
+    // }
+
     // 4. Return the index of the last remaining node (root)
     return -1; // placeholder
 }

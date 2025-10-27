@@ -49,14 +49,14 @@ struct MinHeap {
         while (pos > 0) {
             //check if the node is a left or right child
             if (pos % 2 != 0) {
-                if (weightArr[pos] > weightArr[parentLeft(pos)]) {
+                if (weightArr[data[pos]] > weightArr[data[parentLeft(pos)]]) {
                     return;
                 }
                 swap(data[pos], data[parentLeft(pos)]);
                 pos = parentLeft(pos);
             }
             else {
-                if (weightArr[pos] > weightArr[parentRight(pos)]) {
+                if (weightArr[data[pos]] > weightArr[data[parentRight(pos)]]) {
                     return;
                 }
                 swap(data[pos], data[parentRight(pos)]);
@@ -78,22 +78,23 @@ struct MinHeap {
         }
         // loops while parent node is greater than any child node
         // check if left and right child are less than, if so swap them and set pos to that
-        while (weightArr[data[pos]] > weightArr[data[leftChild(pos)]]) {
-            if (weightArr[data[pos]] < weightArr[data[leftChild(pos)]]) {
-                return;
-            }
-            swap(data[pos], data[leftChild(pos)]);
-            pos = leftChild(pos);
-                if (weightArr[data[pos]] < weightArr[data[rightChild(pos)]]) {
-                    return;
-                }
+
+        while (leftChild(pos) < size) {
+
+             if (weightArr[data[leftChild(pos)]] < weightArr[data[rightChild(pos)]]) {
+                 if (weightArr[data[leftChild(pos)]] < weightArr[data[pos]]) {
+                     swap(data[pos], data[leftChild(pos)]);
+                     pos = leftChild(pos);
+                 }
+             }
+
+            if (weightArr[data[rightChild(pos)]] < weightArr[data[pos]]) {
                 swap(data[pos], data[rightChild(pos)]);
                 pos = rightChild(pos);
+            }
 
-
+            return;
         }
-
-
     }
 };
 
