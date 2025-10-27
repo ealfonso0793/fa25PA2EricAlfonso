@@ -95,15 +95,28 @@ int buildEncodingTree(int nextFree) {
     // 1. Create a MinHeap object.
     MinHeap heap = MinHeap();
 
+    for (int i = 0; i < nextFree; ++i) {
+        cout << weightArr[i] << " ";
+    }
+
+    cout << endl;
 
     // 2. Push all leaf node indices into the heap.
     for (int i = 0; i < nextFree; ++i) {
         heap.push(i, weightArr);
     }
 
-    for (int i = 0; i < nextFree; ++i) {
-        cout << weightArr[heap.data[i]] << " ";
-    }
+
+
+    cout << endl;
+   while (heap.size > 0) {
+       int j = heap.pop(weightArr);
+       cout << j << endl;
+       for (int i = 0; i < heap.size; ++i) {
+           cout << weightArr[heap.data[i]] << " ";
+       }
+       cout << endl;
+   }
 
 
     // 3. While the heap size is greater than 1:
