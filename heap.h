@@ -16,7 +16,6 @@ struct MinHeap {
 
     // helper classes for finding parent of a left / right child
     int parentLeft(int i) { return (i - 1) / 2; }
-    int parentRight(int i) { return (i - 2) / 2; }
 
     int leftChild(int i) { return i * 2 + 1; }
     int rightChild(int i) { return i * 2 + 2; }
@@ -48,24 +47,16 @@ struct MinHeap {
         // loops while node as pos is not at root
         while (pos > 0) {
             //check if the node is a left or right child
-            if (pos % 2 != 0) {
-                if (weightArr[data[pos]] > weightArr[data[parentLeft(pos)]]) {
+                if (weightArr[pos] >= weightArr[parentLeft(pos)]) {
                     return;
                 }
                 swap(data[pos], data[parentLeft(pos)]);
                 pos = parentLeft(pos);
             }
-            else {
-                if (weightArr[data[pos]] > weightArr[data[parentRight(pos)]]) {
-                    return;
-                }
-                swap(data[pos], data[parentRight(pos)]);
-                pos = parentRight(pos);
-            }
 
 
             // sets pos to new position in tree
-        }
+
         //left child node: 2i + 1
         //right child node: 2i + 2
 
@@ -73,13 +64,14 @@ struct MinHeap {
 
     void downheap(int pos, int weightArr[]) {
         // TODO: swap parent downward while larger than any child
-        if (size <= 1) {
+        if (size < 1) {
             return;
         }
         // loops while parent node is greater than any child node
-        // check if left and right child are less than, if so swap them and set pos to that
+        // first check if leftchild exists
         while (leftChild(pos) < size) {
-             if (weightArr[data[leftChild(pos)]] < weightArr[data[rightChild(pos)]]) {
+            //check if left child is less than right child
+             if (weightArr[data[leftChild(pos)]] <= weightArr[data[rightChild(pos)]]) {
                  if (weightArr[data[leftChild(pos)]] < weightArr[data[pos]]) {
                      swap(data[pos], data[leftChild(pos)]);
                      pos = leftChild(pos);

@@ -99,6 +99,7 @@ int buildEncodingTree(int nextFree) {
         cout << weightArr[i] << " ";
     }
 
+
     cout << endl;
 
     // 2. Push all leaf node indices into the heap.
@@ -106,17 +107,19 @@ int buildEncodingTree(int nextFree) {
         heap.push(i, weightArr);
     }
 
-
+    for (int i = 0; i < nextFree; ++i) {
+        cout << weightArr[heap.data[i]] << " ";
+    }
 
     cout << endl;
-   while (heap.size > 0) {
-       int j = heap.pop(weightArr);
-       cout << j << endl;
-       for (int i = 0; i < heap.size; ++i) {
-           cout << weightArr[heap.data[i]] << " ";
-       }
-       cout << endl;
-   }
+   // while (heap.size > 0) {
+   //     int j = heap.pop(weightArr);
+   //     cout << j << endl;
+   //     for (int i = 0; i < heap.size; ++i) {
+   //         cout << weightArr[heap.data[i]] << " ";
+   //     }
+   //     cout << endl;
+   // }
 
 
     // 3. While the heap size is greater than 1:
@@ -125,26 +128,80 @@ int buildEncodingTree(int nextFree) {
     //    - Set left/right pointers
     //    - Push new parent index back into the heap
 
-    // while (heap.size > 1) {
-    //     int node1 = heap.pop(weightArr);
-    //     int node2 = heap.pop(weightArr);
-    //     int parent = weightArr[node1] + weightArr[node2];
-    //     node1 = heap.leftChild(parent);
-    //     node2 = heap.rightChild(parent);
-    //     cout << parent << endl;
-    //     heap.push(parent, weightArr);
-    // }
+    while (heap.size > 1) {
+        cout << "LOOP " << endl;
+
+        cout << "Initial List: " << endl;
+        for (int i = 0; i < heap.size; ++i) {
+            cout << heap.data[i] << " ";
+        }
+        cout << endl;
+        for (int i = 0; i < heap.size; ++i) {
+            cout << weightArr[heap.data[i]] << " ";
+        }
+        cout << endl;
+
+        // gets the current lowest key from heap.data
+        int node1 = heap.pop(weightArr);
+        cout << "Node 1:" << endl;
+        for (int i = 0; i < heap.size; ++i) {
+            cout << heap.data[i] << " ";
+        }
+        cout << endl;
+        for (int i = 0; i < heap.size; ++i) {
+            cout << weightArr[heap.data[i]] << " ";
+        }
+        cout << endl;
+
+        // second heap.pop call
+        int node2 = heap.pop(weightArr);
+        cout << "Node 2:" << endl;
+        for (int i = 0; i < heap.size; ++i) {
+            cout << heap.data[i] << " ";
+        }
+        cout << endl;
+        for (int i = 0; i < heap.size; ++i) {
+            cout << weightArr[heap.data[i]] << " ";
+        }
+        cout << endl;
+
+        // increment node pos
+        leftArr[nextFree] = node1;
+        rightArr[nextFree] = node2;
+
+        // adds the weights together to make new parent
+        int parent = weightArr[node1] + weightArr[node2];
+        weightArr[nextFree] = parent;
+        heap.push(nextFree, weightArr);
+        nextFree++;
+
+
+        cout << "Push result" << endl;
+        for (int i = 0; i < heap.size; ++i) {
+            cout << heap.data[i] << " ";
+        }
+        cout << endl;
+        for (int i = 0; i < heap.size; ++i) {
+            cout << weightArr[heap.data[i]] << " ";
+        }
+        cout << "Resulting parent: " << parent << endl;
+        cout << endl;
+    }
 
     // 4. Return the index of the last remaining node (root)
-    return -1; // placeholder
+    return heap.data[0]; // placeholder
 }
 
 // Step 4: Use an STL stack to generate codes
 void generateCodes(int root, string codes[]) {
+    stack<pair<int, string>> codesStack;
+    codesStack.push(make_pair(root, codes[root]));
+
     // TODO:
     // Use stack<pair<int, string>> to simulate DFS traversal.
     // Left edge adds '0', right edge adds '1'.
     // Record code when a leaf node is reached.
+
 }
 
 // Step 5: Print table and encoded message
