@@ -95,10 +95,9 @@ int buildEncodingTree(int nextFree) {
     // 1. Create a MinHeap object.
     MinHeap heap = MinHeap();
 
-    for (int i = 0; i < nextFree; ++i) {
-        cout << weightArr[i] << " ";
-    }
-
+    // for (int i = 0; i < nextFree; ++i) {
+    //     cout << weightArr[i] << " ";
+    // }
 
     cout << endl;
 
@@ -107,9 +106,9 @@ int buildEncodingTree(int nextFree) {
         heap.push(i, weightArr);
     }
 
-    for (int i = 0; i < nextFree; ++i) {
-        cout << weightArr[heap.data[i]] << " ";
-    }
+    // for (int i = 0; i < nextFree; ++i) {
+    //     cout << weightArr[heap.data[i]] << " ";
+    // }
 
     cout << endl;
    // while (heap.size > 0) {
@@ -129,41 +128,23 @@ int buildEncodingTree(int nextFree) {
     //    - Push new parent index back into the heap
 
     while (heap.size > 1) {
-        cout << "LOOP " << endl;
-
-        cout << "Initial List: " << endl;
-        for (int i = 0; i < heap.size; ++i) {
-            cout << heap.data[i] << " ";
-        }
-        cout << endl;
-        for (int i = 0; i < heap.size; ++i) {
-            cout << weightArr[heap.data[i]] << " ";
-        }
-        cout << endl;
+        // cout << "LOOP " << endl;
+        //
+        // cout << "Initial List: " << endl;
+        // for (int i = 0; i < heap.size; ++i) {
+        //     cout << heap.data[i] << " ";
+        // }
+        // cout << endl;
+        // for (int i = 0; i < heap.size; ++i) {
+        //     cout << weightArr[heap.data[i]] << " ";
+        // }
+        // cout << endl;
 
         // gets the current lowest key from heap.data
         int node1 = heap.pop(weightArr);
-        cout << "Node 1:" << endl;
-        for (int i = 0; i < heap.size; ++i) {
-            cout << heap.data[i] << " ";
-        }
-        cout << endl;
-        for (int i = 0; i < heap.size; ++i) {
-            cout << weightArr[heap.data[i]] << " ";
-        }
-        cout << endl;
 
         // second heap.pop call
         int node2 = heap.pop(weightArr);
-        cout << "Node 2:" << endl;
-        for (int i = 0; i < heap.size; ++i) {
-            cout << heap.data[i] << " ";
-        }
-        cout << endl;
-        for (int i = 0; i < heap.size; ++i) {
-            cout << weightArr[heap.data[i]] << " ";
-        }
-        cout << endl;
 
         // increment node pos
         leftArr[nextFree] = node1;
@@ -172,30 +153,53 @@ int buildEncodingTree(int nextFree) {
         // adds the weights together to make new parent
         int parent = weightArr[node1] + weightArr[node2];
         weightArr[nextFree] = parent;
+
+        //pushes parent index back into heap
         heap.push(nextFree, weightArr);
         nextFree++;
 
-
-        cout << "Push result" << endl;
-        for (int i = 0; i < heap.size; ++i) {
-            cout << heap.data[i] << " ";
-        }
-        cout << endl;
-        for (int i = 0; i < heap.size; ++i) {
-            cout << weightArr[heap.data[i]] << " ";
-        }
-        cout << "Resulting parent: " << parent << endl;
-        cout << endl;
     }
 
     // 4. Return the index of the last remaining node (root)
-    return heap.data[0]; // placeholder
+    for (int i = 0; i < nextFree; ++i) {
+        cout << leftArr[i] << "" << charArr[leftArr[i]] << " ";
+
+    }
+    cout << endl;
+    for (int i = 0; i < nextFree; ++i) {
+        cout << rightArr[i] << "" << charArr[rightArr[i]] << " ";
+    }
+
+    return heap.data[0];
 }
 
 // Step 4: Use an STL stack to generate codes
 void generateCodes(int root, string codes[]) {
+
     stack<pair<int, string>> codesStack;
-    codesStack.push(make_pair(root, codes[root]));
+    // push the root into codeStack
+    codesStack.push(pair<int, string>(root, " "));
+    while (!codesStack.empty()) {
+        pair<int, string> code = codesStack.top();
+        codesStack.pop();
+
+        if (leftArr[(code.first - 1) / 2] < 0) {
+            codes[leftArr[code.first]] = code.second;
+        }
+        if (rightArr[(code.first - 1) / 2] < 0) {
+            codes[rightArr[code.first]] = code.second;
+        }
+
+
+        if (leftArr[code.first] > 0) {
+            codesStack.push(pair<int, string>(leftArr[code.first], code.second + "0"));
+        }
+
+        if (rightArr[code.first] > 0) {
+            codesStack.push(pair<int, string>(rightArr[code.first], code.second + "1"));
+        }
+
+    }
 
     // TODO:
     // Use stack<pair<int, string>> to simulate DFS traversal.

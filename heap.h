@@ -16,7 +16,6 @@ struct MinHeap {
 
     // helper classes for finding parent of a left / right child
     int parentLeft(int i) { return (i - 1) / 2; }
-
     int leftChild(int i) { return i * 2 + 1; }
     int rightChild(int i) { return i * 2 + 2; }
 
@@ -38,6 +37,10 @@ struct MinHeap {
         return currMin; // placeholder
     }
 
+    /*
+     *upheap compares the most recently added index to its respective parent,
+     *swapping if less than
+     */
     void upheap(int pos, int weightArr[]) {
         // TODO: swap child upward while smaller than parent
 
@@ -46,7 +49,7 @@ struct MinHeap {
         }
         // loops while node as pos is not at root
         while (pos > 0) {
-            //check if the node is a left or right child
+            //check if the node is greater than parent
                 if (weightArr[pos] >= weightArr[parentLeft(pos)]) {
                     return;
                 }
@@ -74,6 +77,7 @@ struct MinHeap {
              if (weightArr[data[leftChild(pos)]] <= weightArr[data[rightChild(pos)]]) {
                  if (weightArr[data[leftChild(pos)]] < weightArr[data[pos]]) {
                      swap(data[pos], data[leftChild(pos)]);
+                     // set new pos
                      pos = leftChild(pos);
                      continue;
                  }
