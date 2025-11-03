@@ -95,8 +95,6 @@ int buildEncodingTree(int nextFree) {
     // 1. Create a MinHeap object.
     MinHeap heap = MinHeap();
 
-
-
     // 2. Push all leaf node indices into the heap.
     for (int i = 0; i < nextFree; ++i) {
         heap.push(i, weightArr);
@@ -111,7 +109,6 @@ int buildEncodingTree(int nextFree) {
     //    - Push new parent index back into the heap
 
     while (heap.size > 1) {
-
 
         // gets the current lowest key from heap.data
         int node1 = heap.pop(weightArr);
@@ -134,35 +131,32 @@ int buildEncodingTree(int nextFree) {
     }
 
     // 4. Return the index of the last remaining node (root)
-    for (int i = 0; i < nextFree; ++i) {
-        cout << leftArr[i] << "" << charArr[leftArr[i]] << " ";
-
-    }
-    cout << endl;
-    for (int i = 0; i < nextFree; ++i) {
-        cout << rightArr[i] << "" << charArr[rightArr[i]] << " ";
-    }
-    cout << endl;
     return heap.data[0];
 }
 
 
-
 // Step 4: Use an STL stack to generate codes
+/*
+ *Generate code first pushes root into stack, from there it will push
+ *its left and right child if it is an internal node (when leftArr[] and rightArr[] != =1)
+ *if it is a leaf node, it records the resulting code in codes[], with the index matching
+ *its repsective letter
+ */
 void generateCodes(int root, string codes[]) {
 
     stack<pair<int, string>> codesStack;
     // push the root into codeStack
-    codesStack.push(pair<int, string>(root, " "));
+    codesStack.push(pair<int, string>(root, ""));
     while (!codesStack.empty()) {
         pair<int, string> code = codesStack.top();
         codesStack.pop();
 
+        // records node at index matching letter
         if (leftArr[code.first] == -1 && rightArr[code.first] == -1) {
-            cout << charArr[code.first] - 'a' << " " << char('a' + code.first)<< " " << code.second << endl;
            codes[charArr[code.first] - 'a']  = code.second;
         }
 
+        // prevents the pushing of invalid nodes
         if (leftArr[code.first] != -1) {
             codesStack.push(pair<int, string>(leftArr[code.first], code.second + "0"));
         }
@@ -171,9 +165,8 @@ void generateCodes(int root, string codes[]) {
             codesStack.push(pair<int, string>(rightArr[code.first], code.second + "1"));
         }
 
+
     }
-
-
 
 
 
