@@ -42,6 +42,7 @@ struct MinHeap {
      *upheap compares the most recently added index to its respective parent,
      *swapping if less than
      */
+
     void upheap(int pos, int weightArr[]) {
         // TODO: swap child upward while smaller than parent
 
