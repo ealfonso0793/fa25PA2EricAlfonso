@@ -147,6 +147,11 @@ void generateCodes(int root, string codes[]) {
     stack<pair<int, string>> codesStack;
     // push the root into codeStack
     codesStack.push(pair<int, string>(root, ""));
+    if (leftArr[root] == -1 && rightArr[root] == -1) {
+        codes[charArr[root] - 'a'] = "0";
+        return;
+    }
+
     while (!codesStack.empty()) {
         pair<int, string> code = codesStack.top();
         codesStack.pop();
